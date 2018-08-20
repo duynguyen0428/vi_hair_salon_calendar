@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {fetchAppointments,fetchPostsWithRedux} from '../action/index';
+import {fetchAppointments,fetchPostsWithRedux} from '../../action/index';
 import {Table} from "reactstrap";
 
-import AppointmentDetail from './AppointmentDetail';
+import AppointmentDetail from '../AppointmentDetail/AppointmentDetail';
 
 class AppointmentList extends Component {
     constructor(){
@@ -27,8 +27,8 @@ class AppointmentList extends Component {
 
   render() {
     return (
-      <div>
-        <Table>
+      <div className="table table-stripe">
+        <Table className="table">
             <thead>
                 <tr>
                 <th scope="col">Customer Name</th>
