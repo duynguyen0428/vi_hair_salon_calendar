@@ -1,13 +1,33 @@
-import  React, { Component } from 'react'
+import  React, {Component} from 'react'
 import moment from 'moment';
-const AppointmentDetail = ({app}) =>{
-    return (
-    <tr>
-      {/* <th scope="row">{index}</th> */}
-      <td> {app.cust_name} </td>
-      <td> {moment(app.date).format("LL")} </td>
-      <td>{app.email}</td>
-    </tr>
-    );
+import './AppointmentDetail.css';
+import {connect} from 'react-redux';
+
+import _ from 'lodash';
+class AppointmentDetail extends Component {
+  
+      render(){
+        console.log(this.props.appt);
+       return ( 
+         <ul>
+
+        </ul>
+       )
+      };
+};
+
+ const mapStateToProps = (state,id)=>{
+  //   return {
+  //     Appointments: state.Appointments
+  // };
+  console.log(state.Appointments[id]);
+  const appt =  state.Appointments.id ;
+  console.log(appt);
+  if(appt){
+    return {appt}
+  }else{
+    return {}
+  }
 }
-export default AppointmentDetail;
+
+export default connect(mapStateToProps)(AppointmentDetail);

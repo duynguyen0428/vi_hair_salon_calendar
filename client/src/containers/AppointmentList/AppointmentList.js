@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {fetchAppointments,fetchPostsWithRedux} from '../../action/index';
-import {Table} from "reactstrap";
-
+import {fetchAppointments} from '../../action/index';
+import {Table, Modal} from "reactstrap";
+import _ from 'lodash';
+import moment from 'moment';
+import {Link} from 'react-router-dom';
 import AppointmentDetail from '../AppointmentDetail/AppointmentDetail';
 
 class AppointmentList extends Component {
@@ -11,17 +13,37 @@ class AppointmentList extends Component {
         super()
         this.componentDidMount = () => {
             this.props.fetchAppointments();
+
+            this.renderModal = this.renderModal.bind(this);
         }
     }
+
+  renderModal(e){
+      console.log(e)
+      return(          
+        <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+        <div className="modal-content">
+            // <AppointmentDetail id={'5b7e3c759e64cf2c2c901905'} />
+        </div>
+        </div>
+        </div>
+      )
+  }
+
   renderList(){
-      return this.props.Appointments.map( appt => {
-        if(typeof appt !== 'undefined' ){
-            return appt.map(app =>{
-                    return(                
-                            <AppointmentDetail key={app._id} app={app}/>
-                    );
-                }) 
-            }
+        return _.map(this.props.Appointments, appt =>{
+            return (
+                // <AppointmentDetail key={appt._id} app={appt}/>
+                <tr key={appt._id}>
+                {/* <th scope="row">{index}</th> */}
+                <td> {appt.cust_name} </td>
+                <td> {moment(appt.date).format("LL")} </td>
+                <td>{appt.email}</td>
+                <td><Link to="/appointment/5b7e3c759e64cf2c2c901905" className="btn btn-primary" >Edit</Link></td>
+                <td><button className="btn btn-delete">Delete</button></td>
+              </tr>
+            );
         });
       }
 
@@ -39,7 +61,17 @@ class AppointmentList extends Component {
             <tbody>
                 {this.renderList()}
             </tbody>
+
+            <Modal>
+                <div className="modal display-block">
+                    <section className="modal-main">
+                    <p> </p>
+                    <button >close</button>
+                    </section>
+                </div>
+            </Modal>
         </Table>
+
       </div>
     )
   }

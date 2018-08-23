@@ -6,16 +6,31 @@ class NavigationComponent extends Component {
   render() {
     return (
         <nav className="site-header sticky-top py-1">
-            <div className="container d-flex flex-column flex-md-row justify-content-between">            
-                <Link className="py-2 d-none d-md-inline-block" to="/">
-                    Home
-                </Link>
-                <Link className="py-2 d-none d-md-inline-block" to="/appointment">
-                    Make Appointment
-                </Link>
-                <Link className="py-2 d-none d-md-inline-block" to="/appointments">
-                Appointment
-                </Link>
+            <div className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">    
+            <Link className="navbar-brand" to="/">Fixed navbar</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarCollapse">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/">
+                        Home
+                        <span className="sr-only">(current)</span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/appointment">
+                        Make Appointment
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/appointments">
+                        Appointment
+                        </Link>
+                    </li>
+                </ul>
+            </div>
             </div>
       </nav>
     );
