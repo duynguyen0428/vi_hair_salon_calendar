@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppointmentList from '../../containers/AppointmentList/AppointmentList';
 import AppointmentDetail from '../../containers/AppointmentDetail/AppointmentDetail';
-import {Route,Redirect,Switch} from 'react-router-dom';
+import {Route,Switch} from 'react-router-dom';
 import HeaderComponent from '../HeaderComponent/HeaderComponent';
 
 
@@ -15,9 +15,11 @@ class MainContent extends Component {
                 <HeaderComponent />
               </div>
           </div>
-          <Route exact path="/" component={AppointmentList} />
-          <Route path="/appointments" component={AppointmentList} />
-          <Route path="/appointment/:id" component={AppointmentDetail} />
+          <Switch>
+            <Route path="/appointment/:id" component={AppointmentDetail} />
+            <Route path="/appointments" component={AppointmentList} />
+            <Route exact path="/" component={AppointmentList} />
+          </Switch>
         </div>
     );
   }
