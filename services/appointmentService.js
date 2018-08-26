@@ -47,7 +47,7 @@ module.exports.Update = async (id,newAppointment,cb)=>{
     });     
 };
 
-module.exports.Remove = async (id,cd)=>{
+module.exports.Remove = async (id,cb)=>{
     await Appointment.findByIdAndRemove(id,(err,appt)=>{
         if(err)
             return cb(err);

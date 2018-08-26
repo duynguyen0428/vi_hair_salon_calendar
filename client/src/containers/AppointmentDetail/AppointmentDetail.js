@@ -2,9 +2,10 @@ import  React, {Component} from 'react'
 import moment from 'moment';
 import './AppointmentDetail.css';
 import {connect} from 'react-redux';
+import {Field, reduxForm} from 'redux-form';
 
 import _ from 'lodash';
-import { Link } from '../../../node_modules/react-router-dom';
+import { Link } from 'react-router-dom';
 class AppointmentDetail extends Component {
     constructor(){
       super();
@@ -12,6 +13,7 @@ class AppointmentDetail extends Component {
     }
     componentDidMount(){
       this.setState( {'appt': this.getAppointment(this.props.match.params.id)});
+      this.handleSubmit = this.handleSubmit.bind(this);
     };
       getAppointment(id){
        return _.find(this.props.Appointments,(a)=>{
@@ -19,32 +21,47 @@ class AppointmentDetail extends Component {
         })
       }
 
+      handleSubmit(values){
+        console.log(values)
+      }
+
+      renderField({input,label,type,data,meta:{touched,error}}){
+        return(
+          <div>
+            <label> {label} </label>
+            <div>
+              <input {...input} type={type} value={data} disabled={true}/>              
+            </div>
+          </div>
+        );
+      }
+
       render(){
       if((typeof this.state.appt !== 'undefined') && (typeof this.state.appt !== null ))
       {
         return ( 
-         <form>
-          <div className="form-group row">
-            <label className="col-sm-2 col-form-label">Customer Name</label>
-            <div className="col-sm-10">
-              {this.state.appt.cust_name}
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-sm-2 col-form-label">Appointment Date</label>
-            <div className="col-sm-10">
-              {this.state.appt.date} 
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <div className="col-sm-6">
-              <button type="submit" className="btn btn-primary">Update</button>
-            </div>
-            <div className="col-sm-6 left">
-            <Link to="/" className="btn btn-danger">Cancel</Link>
-            </div>
-          </div>
+         <form onSubmit={this.handleSubmit}>
+         <Field
+          name="cust_name"
+          component={this.renderField}
+          type = "text"
+          label="Customer Name"
+          data={this.state.appt.cust_name}
+         />
+         <Field
+         name="email"
+         component={this.renderField}
+         type = "email"
+         label="Customer Email"
+         data={this.state.appt.email}
+         />
+         <Field
+         name="apptdate"
+         component={this.renderField}
+         type = "date"
+         label="Appointment Date"
+         data={this.state.appt.date}
+         />
 
         </form>
         )
@@ -57,15 +74,10 @@ class AppointmentDetail extends Component {
     return {
       Appointments: state.Appointments
   };
-  // console.log(state.Appointments[id]);
-  // const appt =  state.Appointments.id ;
-  // console.log(appt);
-  // if(appt){
-  //   return {appt}
-  // }else{
-  //   return {}
-  // }
 }
 
+
 // export default AppointmentDetail;
-export default connect(mapStateToProps)(AppointmentDetail);
+export default reduxForm({
+  form: 'appointmentDetailForm'
+})(connect(mapStateToProps)(AppointmentDetail));

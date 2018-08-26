@@ -1,47 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {fetchAppointments} from '../../action/index';
+import {fetchAppointments,deleteAppointment} from '../../action/index';
 import {Table, Modal} from "reactstrap";
 import _ from 'lodash';
 import moment from 'moment';
-import {Link} from 'react-router-dom';
-import AppointmentDetail from '../AppointmentDetail/AppointmentDetail';
+import {Link,Redirect } from 'react-router-dom';
 
 class AppointmentList extends Component {
     constructor(){
         super()
         this.componentDidMount = () => {
-            this.props.fetchAppointments();
-
-            this.renderModal = this.renderModal.bind(this);
+            setInterval(() => {this.props.fetchAppointments()},5000);
         }
     }
 
-  renderModal(e){
-      console.log(e)
-      return(          
-        <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-        <div className="modal-content">
-            // <AppointmentDetail id={'5b7e3c759e64cf2c2c901905'} />
-        </div>
-        </div>
-        </div>
-      )
-  }
+    deleteAppintment(id){
+        this.props.deleteAppointment(id,()=>{
+            return <Redirect to="/" />
+        })
+    }
 
   renderList(){
         return _.map(this.props.Appointments, appt =>{
             return (
-                // <AppointmentDetail key={appt._id} app={appt}/>
                 <tr key={appt._id}>
-                {/* <th scope="row">{index}</th> */}
                 <td> {appt.cust_name} </td>
                 <td> {moment(appt.date).format("LL")} </td>
                 <td>{appt.email}</td>
-                <td><Link to="/appointment/5b7e3c759e64cf2c2c901905" className="btn btn-primary" >Edit</Link></td>
-                <td><button className="btn btn-delete">Delete</button></td>
+                <td><Link to={"/appointment/" + appt._id} className="btn btn-primary" >Edit</Link></td>
+                <td><button className="btn btn-delete" onClick={this.deleteAppintment.bind(this,appt._id)}>Delete</button></td>
               </tr>
             );
         });
@@ -86,7 +74,7 @@ function mapStateToProps(state) {
   }
 
   function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAppointments }, dispatch);
+    return bindActionCreators({fetchAppointments , deleteAppointment}, dispatch);
   }
 
 // Promote BookList from a component to a container - it needs to know

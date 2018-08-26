@@ -18,8 +18,11 @@ var app = express();
 // mongoose.connect('mongodb://dev1:abcd1234@ds113942.mlab.com:13942/webappdb');
 
 if(!isProduction){
-  mongoose.connect('mongodb://localhost:27017/webapp')
+  mongoose.connect('mongodb://localhost:27017/webapp',{useNewUrlParser: true})
   mongoose.set({debug : true});
+}else{
+  mongoose.connect('mongodb://dev1:abcd1234@ds113942.mlab.com:13942/webappdb',{useNewUrlParser: true})
+  mongoose.set({debug : false});
 }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });

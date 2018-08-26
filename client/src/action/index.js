@@ -1,11 +1,22 @@
 import axios from "axios";
-
+import { BASE_URL,APPOINTMENT_API,FETCH_APPOINTMENTS,DELETE_APPOINTMENT } from "./constants";
 export function fetchAppointments() {
-    var url = "http://localhost:5000/api/v1/appointment";
+    var url = BASE_URL + APPOINTMENT_API;
     var request = axios.get(url);
     return {
-        type: "FETCH_APPOINTMENTS",
+        type: FETCH_APPOINTMENTS,
         payload: request
+    };
+}
+
+export function deleteAppointment(apptId,callback){
+    var url = BASE_URL + APPOINTMENT_API + "/"+apptId;
+    var request = axios
+                .delete(url)
+                .then(() => callback());
+    return {
+        type: DELETE_APPOINTMENT,
+        payload: apptId
     };
 }
 

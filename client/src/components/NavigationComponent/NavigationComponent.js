@@ -5,32 +5,23 @@ import './NavigationComponent.css'
 class NavigationComponent extends Component {
   render() {
     return (
-        <nav className="site-header sticky-top py-1">
-            <div className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">    
-            <Link className="navbar-brand" to="/">Fixed navbar</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarCollapse">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <Link className="nav-link" to="/">
-                        Home
-                        <span className="sr-only">(current)</span>
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/appointment">
-                        Make Appointment
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/appointments">
+        <nav>
+            <div className="nav-wrapper">
+                <Link className="brand-logo left" to="/">
+                    Hair By Vicky
+                </Link>
+                <ul id="nav-mobile" className="left hide-on-med-and-down">
+                    <li>          
+                        <Link to="/appointments">
                         Appointment
                         </Link>
                     </li>
+                    <li>          
+                        <Link to="/appointment">
+                        Make Appointment
+                        </Link>
+                    </li>
                 </ul>
-            </div>
             </div>
       </nav>
     );
